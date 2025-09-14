@@ -1,111 +1,112 @@
-AuthRecorder Pro v2.0.0 - Complete Documentation
+AuthRecorder Pro v2.0.0 – Quick‑Start & Troubleshooting Cheat Sheet
+This is a distilled reference you can keep on your desktop (or copy into a Markdown note).
+👉 All commands are relative to the project root (/authrecorder‑extension).
 
-=== TOOL OVERVIEW ===
-AuthRecorder Pro is an advanced authentication flow capture and replay tool designed for security professionals and developers. It provides comprehensive capabilities for recording, analyzing, and replaying complex authentication mechanisms across web applications.
+1. One‑liner Install
+bash
 
-Key capabilities:
-- Multi-browser support (Chromium, Firefox, WebKit)
-- MITM proxy integration for enhanced capture
-- Automatic handling of CSRF tokens, bearer tokens, and session cookies
-- Generation of production-ready Python scripts
-- Professional GUI with live validation
-- CLI mode for automation
-- Anti-bot detection capabilities
+# clone & install
+git clone https://github.com/shinealightplz/AuthRecorder-extension.git
+cd AuthRecorder-extension
+python install.py
+The script pulls the required PyPI packages (requests, playwright, rich, jinja2, tqdm, optional mitmproxy) and sets up the Playwright browsers.
 
-=== BROWSER EXTENSION DETAILS ===
-The AuthRecorder browser extension enhances the core tool's capabilities by:
+2. Launching the GUI
+bash
 
-1. Content Script Features:
-- Intercepts and logs all network requests
-- Captures DOM changes during authentication flows
-- Detects anti-bot protection mechanisms
-- Records user interactions with login forms
+python authrecorder_complete.py
+Target URL – paste the login page.
+Browser Engine – default is Chromium.
+Proxy – leave empty for direct; click the MITM button to auto‑start mitmproxy on port 8080.
+Pins a “Start Capture” button; stop when the flow completes.
 
-2. Background Script Features:
-- Maintains persistent connection with main application
-- Handles message passing between browser and tool
-- Manages authentication state tracking
-- Processes captured data before sending to main tool
+3. Running in CLI Mode
+Flag	Value	Description
+--cli	mandatory	Enables command‑line mode.
+--target-url	<URL>	The page to record.
+--browser	chromium 	firefox
+--mitm	–	Starts mitmproxy automatically.
+--proxy	http://host:port	Forward requests through your own proxy.
+--batch	file.txt	One‑line user,password.
+--protected	<URL>	URL that requires a successful login to access.
+--zip	–	Creates a compressed archive of the capture folder.
+--output	path/	Where to write the capture folder.
+--log-level	DEBUG/INFO/WARNING/ERROR	Logging verbosity.
+Sample Commands
+bash
 
-3. Popup Interface:
-- Quick access to recording controls
-- Visual feedback on capture status
-- Configuration options for advanced users
-- Help documentation access
+# Simple capture
+python authrecorder_complete.py --cli --target-url https://example.com/login
 
-4. Settings Page:
-- Proxy configuration
-- Capture granularity settings
-- Data retention policies
-- Performance tuning options
+# With the MITM proxy
+python authrecorder_complete.py --cli --target-url https://example.com/login --mitm
 
-=== INSTALLATION ===
-1. Tool Installation:
-   python install.py
+# Run a batch test
+python authrecorder_complete.py \
+  --cli \
+  --target-url https://example.com/login \
+  --batch credentials.txt \
+  --protected https://example.com/dashboard
+4. Extension Use
+Load:
+chrome://extensions/ → Developer mode → Load unpacked → authrecorder‑extension/
 
-2. Extension Installation:
-   - Load unpacked extension from: authrecorder-extesion/
-   - Enable in browser developer mode
+Activate: Click the icon → “Start recording” → Begin interacting with the site.
 
-3. Dependencies:
-   - Python 3.8+
-   - Playwright browsers
-   - mitmproxy (optional)
+Settings:
 
-=== USAGE GUIDE ===
-1. GUI Mode:
-   - Launch with: python authrecorder_complete.py
-   - Configure target URL and options
-   - Start capture and interact with login flow
-   - Review and export generated scripts
+Proxy: configure MITM or custom proxy.
+Granularity: decide whether to capture all XHRs, only fetch calls, etc.
+Retention: keep data only for ☑️ days.
+Data: The extension streams captured packets and DOM mutations to the local authrecorder process. All data stays under outputs/.
 
-2. CLI Mode:
-   Basic capture:
-   python authrecorder_complete.py --cli --target-url [URL]
+5. Output Folder Structure (after a successful capture)
 
-   With MITM:
-   python authrecorder_complete.py --cli --target-url [URL] --mitm
+outputs/
+└── 2024‑10‑10_12‑30‑17/
+    ├── capture.json          # Raw request/response, DOM snapshots, etc.
+    ├── login_requests.py     # Requests‑based login script
+    ├── cookie_login.py       # Cookie‑only script
+    ├── playwright_adv.py    # Playwright example (requires extra steps)
+    ├── cookies.json          # Serialized session cookies
+    └── successful_logins.txt # (batch mode) auth results
+Tip: capture.json is the single source of truth – you can re‑generate any script from it.
 
-   Batch testing:
-   python authrecorder_complete.py --cli --target-url [URL] --batch credentials.txt
+6. Script Generation Basics
+python
 
-3. Extension Usage:
-   - Click extension icon to start/stop recording
-   - Configure via settings page
-   - View captured data in real-time
+# Example: generate_requests.py
+from authrecorder.generate import RequestsGenerator
 
-=== FEATURES ===
-1. Advanced Capture:
-   - Full request/response logging
-   - DOM snapshotting
-   - Cookie tracking
-   - Header analysis
+gen = RequestsGenerator("stamp2024-10-10_12-30-17/capture.json")
+gen.write_script("generated/login_requests.py")
+The generator will:
 
-2. Script Generation:
-   - Requests-based authentication scripts
-   - Playwright automation scripts
-   - Cookie-based authentication
-   - Multi-step flow handlers
+Pull the CSRF token pattern from intercepted responses.
+Create a requests.Session() that auto‑harvests cookies.
+Compose the final POST/GET verbs with correct payloads.
+7. Common Hiccups & Fixes
+Problem	Symptom	Fix
+Playwright browsers missing	pyinstaller error: “cannot find chromium.bin”	playwright install chromium
+MITM port 8080 in use	ConnectionRefusedError	Kill the proccess (`netstat -ano
+Extension not receiving data	GUI shows “Connection lost”	1) Re‑load extension after any change. <br>2) Ensure authrecorder_complete.py is still running. <br>3) Verify Chrome/Edge has allow access to file URLs enabled.
+Scripts fail with “token not found”	Extension didn't capture the CSRF blob	Increase --granularity to record all network traffic or verify that the request is not blocked by the site’s CSP.
+Batch test exits prematurely	error: cannot open credentials.txt	Ensure the file exists in the current directory or supply absolute path.
+Long capture timings (minutes)	Scripts take > 15 min to load	Disable extraneous tabs, use headless mode (--browser=chromium) and optional --mitm for more efficient packet filtering.
+8. Logging
+All logs are written to outputs/authrecorder.log.
+Set an environment variable for fine‑grained control:
 
-3. Security Features:
-   - Local data storage only
-   - Secure credential handling
-   - Configurable data retention
-   - No telemetry
+bash
 
-=== TROUBLESHOOTING ===
-1. Common Issues:
-   - Browser launch failures: Try different browser engine
-   - Proxy errors: Check port 8080 availability
-   - Capture gaps: Ensure extension is enabled
-
-2. Debugging:
-   - Enable debug logs: --log-level DEBUG
-   - Check outputs/authrecorder.log
-   - Verify extension connectivity
-
-=== SUPPORT ===
-For additional assistance:
-- Review generated script examples
-- Check documentation/ directory
-- Examine test cases in tests/
+export AUTHRECORDER_LOG_LEVEL=DEBUG
+9. Extending AuthRecorder
+Add a new capturer: Edit /src/capturers/.
+Add a script template: Edit /src/generators/playwright.py or requests.py.
+Unit test: Add a test in tests/ and run pytest.
+10. Where to Get Help
+Resource	Link
+Demo scripts	outputs/ after a capture
+Source code	src/
+Unit tests	tests/
+Issue tracker	GitHub Issues
