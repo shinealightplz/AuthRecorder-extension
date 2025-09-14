@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AuthRecorder Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AuthRecorder Pro</h1>
+      <div class="status">
+        <span class="status-label">Status:</span>
+        <span id="recordingStatus" class="status-value">Not Recording</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="controls">
+        <button id="startRecording" class="btn primary">Start Recording</button>
+        <button id="stopRecording" class="btn danger" disabled>Stop Recording</button>
+        <button id="clearSession" class="btn secondary" disabled>Clear Session</button>
+      </div>
+
+      <div class="session-info">
+        <h2>Current Session</h2>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-label">Requests:</span>
+            <span id="requestCount" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Cookies:</span>
+            <span id="cookieCount" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Tokens:</span>
+            <span id="tokenCount" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stealth-settings">
+        <h2>Stealth Settings</h2>
+        <div class="settings-grid">
+          <div class="setting">
+            <label for="browserProfile">Browser Profile:</label>
+            <select id="browserProfile">
+              <option value="chrome_windows">Chrome (Windows)</option>
+              <option value="firefox_linux">Firefox (Linux)</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label for="fingerprintProtection">Fingerprint Protection:</label>
+            <input type="checkbox" id="fingerprintProtection" checked>
+          </div>
+          <div class="setting">
+            <label for="canvasNoise">Canvas Noise:</label>
+            <input type="checkbox" id="canvasNoise" checked>
+          </div>
+          <div class="setting">
+            <label for="automationHiding">Hide Automation:</label>
+            <input type="checkbox" id="automationHiding" checked>
+          </div>
+        </div>
+      </div>
+
+      <div class="export-section">
+        <h2>Export Options</h2>
+        <div class="export-buttons">
+          <button id="exportSession" class="btn secondary" disabled>Export Session</button>
+          <select id="exportFormat">
+            <option value="json">JSON</option>
+            <option value="python">Python Script</option>
+            <option value="playwright">Playwright Script</option>
+            <option value="selenium">Selenium Script</option>
+          </select>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="version">v2.0.0</div>
+      <div class="links">
+        <a href="#" id="showHelp">Help</a>
+        <a href="#" id="showSettings">Settings</a>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AuthRecorder Pro - Help</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2196F3;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .tip {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>AuthRecorder Pro Help</h1>
+  
+  <div class="section">
+    <h2>Getting Started</h2>
+    <p>AuthRecorder Pro helps you capture and analyze authentication flows. Here's how to use it:</p>
+    <ol>
+      <li>Click the extension icon to open the popup interface</li>
+      <li>Click "Start Recording" before beginning the authentication process</li>
+      <li>Complete the login or authentication flow normally</li>
+      <li>Click "Stop Recording" to save the session</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Features</h2>
+    <ul>
+      <li><strong>Request Capture:</strong> Records all HTTP requests during authentication</li>
+      <li><strong>Cookie Monitoring:</strong> Tracks cookie changes and session data</li>
+      <li><strong>Token Detection:</strong> Automatically identifies authentication tokens</li>
+      <li><strong>Stealth Mode:</strong> Prevents detection of automated testing</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Stealth Settings</h2>
+    <p>Configure anti-detection features:</p>
+    <ul>
+      <li><strong>Browser Profile:</strong> Emulate different browser environments</li>
+      <li><strong>Fingerprint Protection:</strong> Prevent browser fingerprinting</li>
+      <li><strong>Canvas Noise:</strong> Add subtle noise to canvas fingerprints</li>
+      <li><strong>Automation Hiding:</strong> Hide automation indicators</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Export Options</h2>
+    <p>Export your captured sessions in different formats:</p>
+    <ul>
+      <li><code>JSON</code> - Raw capture data</li>
+      <li><code>Python Script</code> - Requests-based replay script</li>
+      <li><code>Playwright Script</code> - Browser automation script</li>
+      <li><code>Selenium Script</code> - WebDriver-based replay script</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Tips</h2>
+    <div class="tip">
+      <strong>💡 Pro Tip:</strong> Use the context menu (right-click) to quickly start/stop recording from any webpage.
+    </div>
+    <div class="tip">
+      <strong>💡 Pro Tip:</strong> Enable all stealth features when testing against sites with bot detection.
+    </div>
+    <div class="tip">
+      <strong>💡 Pro Tip:</strong> Export in multiple formats to have different replay options available.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li><strong>Recording not starting:</strong> Refresh the page and try again</li>
+      <li><strong>Missing requests:</strong> Ensure all permissions are granted</li>
+      <li><strong>Export fails:</strong> Check if the session contains data</li>
+    </ul>
+  </div>
+</body>
+</html>

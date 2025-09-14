@@ -1,0 +1,236 @@
+/* AuthRecorder Pro - Popup Styles */
+:root {
+  --primary-color: #2196F3;
+  --danger-color: #f44336;
+  --success-color: #4CAF50;
+  --text-color: #333;
+  --bg-color: #fff;
+  --border-color: #ddd;
+  --hover-color: #f5f5f5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text-color);
+  background: var(--bg-color);
+}
+
+.container {
+  padding: 16px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-label {
+  font-weight: 500;
+}
+
+.status-value {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--hover-color);
+}
+
+.status-value.recording {
+  background: var(--success-color);
+  color: white;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: #1976D2;
+}
+
+.btn.danger {
+  background: var(--danger-color);
+  color: white;
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: #D32F2F;
+}
+
+.btn.secondary {
+  background: var(--hover-color);
+  color: var(--text-color);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.session-info {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--hover-color);
+  border-radius: 4px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.stealth-settings {
+  margin-bottom: 20px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting label {
+  font-size: 12px;
+  color: #666;
+}
+
+.setting select,
+.setting input[type="checkbox"] {
+  padding: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.export-section {
+  margin-bottom: 20px;
+}
+
+.export-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.export-buttons select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.version {
+  font-size: 12px;
+  color: #666;
+}
+
+.links {
+  display: flex;
+  gap: 16px;
+}
+
+.links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.toast {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
